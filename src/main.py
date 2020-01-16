@@ -1,7 +1,11 @@
-from flask import Flask, escape, request, render_template
 import requests
+
 import json
 import os
+
+from flask import Flask, escape, request, render_template
+
+from stock import get_stock_info
 
 KAKAO_REST_API_KEY = os.environ['KAKAO_REST_API_KEY']
 
@@ -36,10 +40,11 @@ def get_access_token(clientId, code):
     return json.loads(((response.text).encode('utf-8')))
 
 def send_message(access_token):
+    _, stock_info = get_stock_info()
     url = 'https://kapi.kakao.com/v2/api/talk/memo/default/send'
     payload = {
-        "object_type": "text",
-        "text": "test",
+        "object_type": 'text',
+        "text": stock_info,
         "link": {
             "web_url": "https://developers.kakao.com",
             "mobile_web_url": "https://developers.kakao.com"
@@ -61,6 +66,6 @@ def hello():
 
 
 if __name__ == '__main__':
-    # app.run(debug=True)
-    response = send_message('mxtiVCCSlfyxXwa-rIev9GgMqBGFH9USbpBrWgorDNMAAAFvaHU3Xw')
-    print(response)
+    app.run(debug=True)
+    #response = send_message('rGIsXlIqLNzHzD1i3Dd2KQ4__OVo24-ev9fcggo9d6gAAAFvsHf0iw')
+    #print(response)
