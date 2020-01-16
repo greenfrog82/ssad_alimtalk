@@ -20,6 +20,7 @@ prompt-toolkit==3.0.2
 ptyprocess==0.6.0
 Pygments==2.5.2
 requests==2.22.0
+selenium==3.141.0
 six==1.13.0
 traitlets==4.3.3
 urllib3==1.25.7
