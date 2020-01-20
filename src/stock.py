@@ -109,8 +109,8 @@ def get_stock_info():
         if count > 5:
             break
         stock_info = '{} {} {}'.format(key, values['name'], values['purchase_amount'])
-        stock_info_msg += f'${stock_info}\n'
-        print(stock_info)
+        
+        stock_info_msg += f'{stock_info}\n'
         dict_stock_info[count] = {'code': key, 'name': values['name'], 'purchase_amount': values['purchase_amount']}
         count+=1
     
