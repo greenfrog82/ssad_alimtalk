@@ -7,7 +7,7 @@ from selenium.webdriver.support.select import Select
 from datetime import datetime
 
 
-DEBUG = True
+DEBUG = False
 
 KOSPI = (3, 'kospi')
 KOSDAQ = (5, 'kosdaq')
@@ -29,8 +29,8 @@ def crawling_stock_info():
         # change select date to today
         schdate = chrome_driver.find_element_by_name('schdate')
         schdate.clear()
-        #schdate.send_keys(datetime.now().strftime('%Y%m%d'))
-        schdate.send_keys(datetime.now().strftime('20200130'))
+        schdate.send_keys(datetime.now().strftime('%Y%m%d'))
+        # schdate.send_keys(datetime.now().strftime('20200130'))
 
         stock_info_file_path_list = []
         for market in (KOSPI, KOSDAQ):

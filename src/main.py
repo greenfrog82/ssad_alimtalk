@@ -4,7 +4,7 @@ import requests
 
 from stock import get_stock_info
 
-SLACK_INCOMMING_WEBHOOK_URL = 'https://hooks.slack.com/services/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'
+SLACK_INCOMMING_WEBHOOK_URL = 'https://hooks.slack.com/services/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'
 
 
 # https://stackoverflow.com/questions/1432924/python-change-the-scripts-working-directory-to-the-scripts-own-directory
@@ -17,8 +17,7 @@ def change_working_directory():
 if __name__ == '__main__':
     change_working_directory()
 
-    _, stock_info = get_stock_info()
-    print('-----')
+    stock_info = get_stock_info()
     print(stock_info)
 
     headers = {

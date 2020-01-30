@@ -2,6 +2,7 @@
 import csv
 import os
 from collections import OrderedDict
+from datetime import date
 
 from crawler import crawling_stock_info
 
@@ -41,16 +42,18 @@ def parse_stock_info(stock_info_file_path, stock_info_msg_title):
 def get_stock_info():
     stock_info_file_path_list = crawling_stock_info()
 
-    stock_info_msg = '-- 코스피 --\n\n'
-    stock_info_msg += parse_stock_info(stock_info_file_path_list[0], '기관')
-    stock_info_msg += '\n'
+    today = date.today()
+    stock_info_msg = f'{today.year}년 {today.month}월 {today.day}일 시간외 외인/기관 순매수 TOP 5 알림!!\n\n'
+    stock_info_msg += '-- 코스피 --\n\n'
     stock_info_msg += parse_stock_info(stock_info_file_path_list[1], '외인')
+    stock_info_msg += '\n'
+    stock_info_msg += parse_stock_info(stock_info_file_path_list[0], '기관')
 
     stock_info_msg += '\n'
     stock_info_msg += '-- 코스닥 --\n\n'
-    stock_info_msg += parse_stock_info(stock_info_file_path_list[2], '기관')
-    stock_info_msg += '\n'
     stock_info_msg += parse_stock_info(stock_info_file_path_list[3], '외인')
+    stock_info_msg += '\n'
+    stock_info_msg += parse_stock_info(stock_info_file_path_list[2], '기관')
 
     return stock_info_msg 
 
