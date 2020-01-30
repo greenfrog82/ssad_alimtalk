@@ -66,10 +66,10 @@ def crawling_stock_info():
         # excel file read
         download_path = './tests/ssad_info_2020_01_31_00_18_49'
         stock_info_file_path_list = [
-            '{download_path}/kospi_institution.csv',
-            '{download_path}/kospi_foreigner.csv',
-            '{download_path}/kosdaq_institution.csv',
-            '{download_path}/kosdaq_foreigner.csv',
+            f'{download_path}/kospi_institution.csv',
+            f'{download_path}/kospi_foreigner.csv',
+            f'{download_path}/kosdaq_institution.csv',
+            f'{download_path}/kosdaq_foreigner.csv',
         ]
 
     return stock_info_file_path_list
