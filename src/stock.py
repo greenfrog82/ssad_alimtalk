@@ -23,6 +23,11 @@ def get_stock_info():
         chrome_driver = webdriver.Chrome('../etc/chromedriver', options=options)
 
         chrome_driver.get('http://marketdata.krx.co.kr/contents/MKD/04/0404/04040400/MKD04040400.jsp')
+        
+        # change select date to today
+        schdate = chrome_driver.find_element_by_name('schdate')
+        schdate.clear()
+        schdate.send_keys(datetime.now().strftime('%Y%m%d'))
 
         select_element_id = chrome_driver.find_element_by_name('var_invr_cd').get_attribute("id")
         # 기관 합계
@@ -62,16 +67,19 @@ def get_stock_info():
         temp = {'name': row[1], 'purchase_amount': float(row[7].replace(",", ""))}
         dict_public_office[row[0]] = temp
 
+    stock_info_msg = ''
+
     # 기관 자료 sort
-    print('기관 TOP 5')
+    stock_info_msg += '기관 TOP 5\n'
     sorted_public_office = OrderedDict(sorted(dict_public_office.items(), reverse=True, key=lambda x: (x[1]['purchase_amount'])))
 
     top_public_office = {}
-    count = 0
+    count = 1
     for key, values in sorted_public_office.items():
-        if count > 4:
+        if count > 5:
             break
-        print('{} {} {}'.format(key, values['name'], values['purchase_amount']))
+        #print('{} {} {}'.format(key, values['name'], values['purchase_amount']))
+        stock_info_msg += '{} {}\n'.format(count, values['name'])
         top_public_office[count] = {'code': key, 'name': values['name'], 'purchase_amount': values['purchase_amount']}
         count+=1
 
@@ -91,42 +99,45 @@ def get_stock_info():
     # 외국인 자료 sort
     sorted_foreigner_office = OrderedDict(sorted(dict_foreigner_office.items(), reverse=True, key=lambda x: (x[1]['purchase_amount'])))
 
-    print('')
-    print('외국인 TOP 5')
+    stock_info_msg += '\n\n외국인 TOP 5\n'
     top_foreigner_office = {}
-    count = 0
+    count = 1
     for key, values in sorted_foreigner_office.items():
-        if count > 4:
+        if count > 5:
             break
-        print('{} {} {}'.format(key, values['name'], values['purchase_amount']))
+        #print('{} {} {}'.format(key, values['name'], values['purchase_amount']))
+        stock_info_msg += '{} {}\n'.format(count, values['name'])
         top_foreigner_office[count] = {'code': key, 'name': values['name'], 'purchase_amount': values['purchase_amount']}
         count+=1
 
-    # TODO: fix the following codes which does not work properly.
-    intersection_codes = set(dict_public_office).intersection(set(dict_foreigner_office))
-    dict_intersection = {}
-    for code in intersection_codes:
-        dict_intersection[code] = {'name': dict_public_office[code]['name'], 'purchase_amount': dict_public_office[code]['purchase_amount']}
+    return stock_info_msg
 
-    sorted_intersection = OrderedDict(sorted(dict_intersection.items(), reverse=True, key=lambda x: (x[1]['purchase_amount'])))
-    dict_stock_info = {}
-    stock_info_msg = ''
-    count = 0
+    # TODO: fix the following codes which does not work properly.
+    #intersection_codes = set(dict_public_office).intersection(set(dict_foreigner_office))
+    #dict_intersection = {}
+    #for code in intersection_codes:
+        #dict_intersection[code] = {'name': dict_public_office[code]['name'], 'purchase_amount': dict_public_office[code]['purchase_amount']}
+
+    #sorted_intersection = OrderedDict(sorted(dict_intersection.items(), reverse=True, key=lambda x: (x[1]['purchase_amount'])))
+    #dict_stock_info = {}
+    #stock_info_msg = ''
+    #count = 0
     
-    print('')
-    print('기관/외국인 양매수 TOP 5')
-    for key, values in sorted_intersection.items():
-        if count > 4:
-            break
-        stock_info = '{} {} {}'.format(key, values['name'], values['purchase_amount'])
-        print(stock_info)
+    #print('')
+    #print('기관/외국인 양매수 TOP 5')
+    #for key, values in sorted_intersection.items():
+        #if count > 4:
+            #break
+        #stock_info = '{} {} {}'.format(key, values['name'], values['purchase_amount'])
+        #print(stock_info)
         
-        stock_info_msg += f'{stock_info}\n'
-        dict_stock_info[count] = {'code': key, 'name': values['name'], 'purchase_amount': values['purchase_amount']}
-        count+=1
+        #stock_info_msg += f'{stock_info}\n'
+        #dict_stock_info[count] = {'code': key, 'name': values['name'], 'purchase_amount': values['purchase_amount']}
+        #count+=1
     
-    return dict_stock_info, stock_info_msg
+    #return dict_stock_info, stock_info_msg
 
 
 if __name__ == '__main__':
-    dict_stock_info, stock_info_msg = get_stock_info()
+    stock_info_msg = get_stock_info()
+    print(stock_info_msg)
