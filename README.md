@@ -3,7 +3,6 @@
 ## 개발환경
 
 * Python 3.7.0
-* Flask 1.1.1
 
 ## 개발환경 설정
 
@@ -24,7 +23,7 @@ cron에 `ssad_alimtalk`을 등록하여 동작시키기 위해서는 다음 두�
 
 ```shell
 $ export EDITOR=vim; crontab -e
-41 15 * * 1-5 /Users/greenfrog/.virtualenvs/ssad/bin/python3.7 /Users/greenfrog/develop/ssad_alimtalk/src/main.py 2> /Users/greenfrog/ssad_alimtalk_failure.log 1> /Users/greenfrog/ssad_alimtalk_success.log 
+45 15 * * 1-5 export SLACK_INCOMING_HOOK="slack incoming web hook url"; /Users/greenfrog/.virtualenvs/ssad/bin/python3.7 /Users/greenfrog/develop/ssad_alimtalk/src/main.py 2> /Users/greenfrog/ssad_alimtalk_failure.log 1> /Users/greenfrog/ssad_alimtalk_success.log 
 ```
 
 
