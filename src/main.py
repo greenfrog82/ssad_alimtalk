@@ -12,13 +12,7 @@ def change_working_directory():
     dname = os.path.dirname(abspath)
     os.chdir(dname)
 
-
-if __name__ == '__main__':
-    change_working_directory()
-
-    stock_info = get_stock_info()
-    print(stock_info)
-
+def send_notification(msg):
     headers = {
         'Content-Type': 'application/json',
     }
@@ -26,5 +20,14 @@ if __name__ == '__main__':
         'text': stock_info,
     }
 
-    response = requests.post(SLACK_INCOMMING_WEBHOOK_URL, data=json.dumps(data), headers=headers)
+    return requests.post(SLACK_INCOMMING_WEBHOOK_URL, data=json.dumps(data), headers=headers)
+
+
+if __name__ == '__main__':
+    change_working_directory()
+
+    stock_info = get_stock_info()
+    print(stock_info)
+
+    response = send_notification(stock_info)
     print(response)

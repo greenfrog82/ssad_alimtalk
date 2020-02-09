@@ -37,7 +37,7 @@ def parse_stock_info(stock_info_file_path, stock_info_msg_title):
 
     return stock_info_msg, sorted_public_office
 
-def get_double_buying_companies(foreigner_stock_info, public_office_stock_info):
+def get_double_buying_companies(foreigner_stock_info, public_office_stock_info, state_pension_stock_info):
     total_stock_info_msg = ''
     foreigner_stock_info_list = list(foreigner_stock_info.items())[:50]
     public_office_stock_info_list = list(public_office_stock_info.items())[:50]
@@ -45,7 +45,7 @@ def get_double_buying_companies(foreigner_stock_info, public_office_stock_info):
     count = 1
     for p_item in public_office_stock_info_list:
         for f_item in foreigner_stock_info_list:
-            if p_item[0] == f_item[0]:
+            if p_item[0] == f_item[0] and p_item[0] in state_pension_stock_info and state_pension_stock_info[p_item[0]]['purchase_amount'] > 0:
                 total_stock_info_msg += f"{count}. {p_item[1]['name']}\n"
                 count += 1
                 break
@@ -70,7 +70,7 @@ def get_stock_info():
 
     stock_info_msg += '\n'
     stock_info_msg += '50위권내의 양매수\n'
-    stock_info_msg += get_double_buying_companies(foreigner_stock_info, public_office_stock_info)
+    stock_info_msg += get_double_buying_companies(foreigner_stock_info, public_office_stock_info, _parse_simple_stock_info(stock_info_file_path_list[1]))
 
     foreigner_stock_info_msg, foreigner_stock_info = parse_stock_info(stock_info_file_path_list[5], '외인')
     public_office_stock_info_msg, public_office_stock_info = parse_stock_info(stock_info_file_path_list[3], '기관')
@@ -82,7 +82,7 @@ def get_stock_info():
     stock_info_msg += public_office_stock_info_msg
     stock_info_msg += '\n'
     stock_info_msg += '50위권내의 양매수\n'
-    stock_info_msg += get_double_buying_companies(foreigner_stock_info, public_office_stock_info)
+    stock_info_msg += get_double_buying_companies(foreigner_stock_info, public_office_stock_info, _parse_simple_stock_info(stock_info_file_path_list[4]))
 
     return stock_info_msg 
 
