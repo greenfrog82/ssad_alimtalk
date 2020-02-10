@@ -4,7 +4,8 @@ import requests
 
 from stock import get_stock_info
 
-SLACK_INCOMMING_WEBHOOK_URL = os.environ['SLACK_INCOMING_HOOK']
+from settings import DEBUG, SLACK_INCOMMING_WEBHOOK_URL
+
 
 # https://stackoverflow.com/questions/1432924/python-change-the-scripts-working-directory-to-the-scripts-own-directory
 def change_working_directory():
@@ -29,5 +30,6 @@ if __name__ == '__main__':
     stock_info = get_stock_info()
     print(stock_info)
 
-    response = send_notification(stock_info)
-    print(response)
+    if not DEBUG:
+        response = send_notification(stock_info)
+        print(response)

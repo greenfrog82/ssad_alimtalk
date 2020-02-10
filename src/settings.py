@@ -1,0 +1,5 @@
+import os 
+
+DEBUG = False
+
+SLACK_INCOMMING_WEBHOOK_URL = os.environ['SLACK_INCOMING_HOOK']
