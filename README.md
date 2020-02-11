@@ -31,3 +31,4 @@ $ export EDITOR=vim; crontab -e
 
 * [KaKaoDevelopers - 로그인](https://developers.kakao.com/docs/restapi/user-management#%EB%A1%9C%EA%B7%B8%EC%9D%B8)
 * [crontab guru](https://crontab.guru/#41_15_*_*_1-5)
+* [Pytest Tutorial](https://www.tutorialspoint.com/pytest/index.htm)
